@@ -14,8 +14,13 @@ router.get('/noticeList', async (req, res, next) => {
   res.send(list)
 })
 
-router.get('/maxId', async (req, res, next) => {
-  let list = await noticeManage.getMaxId(req.query)
+router.post('/notice', async (req, res, next) => {
+  let list = await noticeManage.noticePublish(req.body)
+  res.send(list)
+})
+
+router.delete('/notice', async (req, res, next) => {
+  let list = await noticeManage.noticeDelete(req.body)
   res.send(list)
 })
 

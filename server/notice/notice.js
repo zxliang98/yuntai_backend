@@ -1,4 +1,5 @@
 const db = require('./../db')
+const tools = require('./../tools')
 
 const dbTable = 'notice'
 
@@ -58,12 +59,18 @@ const noticePublishSQL = function (params) {
   }
 }
 
-// 获取最大id
-const getMaxIdSQL = function (params) {
-  let sql = `select max(id) from ${dbTable} `
+// 删除公告
+const noticeDeleteSQL = function (params) {
+  let sql = `delete from ${dbTable} ${where}`
+  let sqlParams = []
+
+  if (params.id) {
+    sql += 'AND id = ?'
+    sqlParams.push(params.id)
+  }
 
   return {
-    sql
+    sql, sqlParams
   }
 }
 
@@ -84,12 +91,20 @@ module.exports = {
       data: data
     }
   },
-  async getMaxId(params) {
-    let data = await db.query(getMaxIdSQL(params))
+  async noticePublish(params) {
+    let data = await db.query(noticePublishSQL(params))
     return {
       code: 0,
       msg: 'success',
-      data: data
+      id: await tools.getMaxId('notice')
+    }
+  },
+  async noticeDelete(params) {
+    let data = await db.query(noticeDeleteSQL(params))
+    return {
+      code: 0,
+      msg: 'success',
+      id: params.id
     }
   },
 }
