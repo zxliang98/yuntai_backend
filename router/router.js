@@ -8,7 +8,7 @@ const playManage = require('./../server/play/play')
 
 // 获取公告详情
 router.get('/notice', async (req, res, next) => {
-  let data = await noticeManage.noticeDetail(req.query)
+  let data = await noticeManage.noticeDetail(req.query, true)
   res.send(data)
 })
 
@@ -33,7 +33,7 @@ router.delete('/notice', async (req, res, next) => {
 
 // 获取景区详情
 router.get('/view', async (req, res, next) => {
-  let data = await viewManage.viewDetail(req.query)
+  let data = await viewManage.viewDetail(req.query, true)
   res.send(data)
 })
 
@@ -58,7 +58,7 @@ router.delete('/view', async (req, res, next) => {
 
 // 获取游玩详情
 router.get('/play', async (req, res, next) => {
-  let data = await playManage.playDetail(req.query)
+  let data = await playManage.playDetail(req.query, true)
   res.send(data)
 })
 

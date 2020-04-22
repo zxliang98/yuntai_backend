@@ -70,8 +70,8 @@ const viewDeleteSQL = function (params) {
 }
 
 module.exports = {
-  async viewDetail(params) {
-    let data = await db.query(viewDetailSQL(params))
+  async viewDetail(params, getObj) {
+    let data = await db.query(viewDetailSQL(params), getObj)
     return {
       code: 0,
       msg: 'success',

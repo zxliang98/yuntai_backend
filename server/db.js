@@ -12,9 +12,10 @@ const conf = {
 const pool = mysql.createPool(conf)
 
 module.exports = {
-  query(input) {
+  query(input, getObj) {
     console.debug("DEBUG: [SQL]   ", input.sql)
     console.debug("DEBUG: [PARAM] ", input.sqlParams)
+    console.debug("DEBUG: [getObj] ", getObj)
     // 异步改同步
     return new Promise((resolve, reject) => {
       pool.getConnection((err, connection) => {
@@ -41,7 +42,7 @@ module.exports = {
               }
               list.push(camelRow)
             })
-            if (list.length < 2) {
+            if (getObj) {
               resolve(list[0] || [])
             } else {
               resolve(list)

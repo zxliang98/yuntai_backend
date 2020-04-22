@@ -75,8 +75,8 @@ const playDeleteSQL = function (params) {
 }
 
 module.exports = {
-  async playDetail(params) {
-    let data = await db.query(playDetailSQL(params))
+  async playDetail(params, getObj) {
+    let data = await db.query(playDetailSQL(params), getObj)
     return {
       code: 0,
       msg: 'success',

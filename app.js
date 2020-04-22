@@ -19,5 +19,5 @@ app.use(cors())
 
 app.use('/', router)
 
-const port = 3003
+const port = 3000
 app.listen(port, () => console.log(`访问${port}端口`))

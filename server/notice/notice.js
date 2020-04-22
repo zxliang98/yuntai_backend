@@ -75,8 +75,8 @@ const noticeDeleteSQL = function (params) {
 }
 
 module.exports = {
-  async noticeDetail(params) {
-    let data = await db.query(noticeDetailSQL(params))
+  async noticeDetail(params, getObj) {
+    let data = await db.query(noticeDetailSQL(params), getObj)
     return {
       code: 0,
       msg: 'success',
