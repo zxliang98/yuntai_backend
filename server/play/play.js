@@ -1,12 +1,12 @@
 const db = require('./../db')
 const tools = require('./../tools')
 
-const dbTable = 'notice'
+const dbTable = 'play'
 
 const where = ' where 1=1 '
 
-// 获取单个公告详情
-const noticeDetailSQL = function (params) {
+// 获取单个游玩详情
+const playDetailSQL = function (params) {
   let sql = `select * from ${dbTable} ${where}`
   let sqlParams = []
 
@@ -20,8 +20,8 @@ const noticeDetailSQL = function (params) {
   }
 }
 
-// 获取公告列表
-const noticeListSQL = function (params) {
+// 获取游玩列表
+const playListSQL = function (params) {
   let sql = `select * from ${dbTable} ${where} `
   let sqlParams = []
 
@@ -41,8 +41,8 @@ const noticeListSQL = function (params) {
   }
 }
 
-// 发布公告
-const noticePublishSQL = function (params) {
+// 发布游玩
+const playPublishSQL = function (params) {
   let sql = `insert into ${dbTable} (title, type, content, publishTime, userName, state) values(?,?,?,?,?,?)`
   let sqlParams = []
 
@@ -59,8 +59,8 @@ const noticePublishSQL = function (params) {
   }
 }
 
-// 删除公告
-const noticeDeleteSQL = function (params) {
+// 删除游玩
+const playDeleteSQL = function (params) {
   let sql = `delete from ${dbTable} ${where}`
   let sqlParams = []
 
@@ -75,32 +75,32 @@ const noticeDeleteSQL = function (params) {
 }
 
 module.exports = {
-  async noticeDetail(params) {
-    let data = await db.query(noticeDetailSQL(params))
+  async playDetail(params) {
+    let data = await db.query(playDetailSQL(params))
     return {
       code: 0,
       msg: 'success',
       data: data
     }
   },
-  async noticeList(params) {
-    let data = await db.query(noticeListSQL(params))
+  async playList(params) {
+    let data = await db.query(playListSQL(params))
     return {
       code: 0,
       msg: 'success',
       data: data
     }
   },
-  async noticePublish(params) {
-    let data = await db.query(noticePublishSQL(params))
+  async playPublish(params) {
+    let data = await db.query(playPublishSQL(params))
     return {
       code: 0,
       msg: 'success',
       id: await tools.getMaxId(dbTable)
     }
   },
-  async noticeDelete(params) {
-    let data = await db.query(noticeDeleteSQL(params))
+  async playDelete(params) {
+    let data = await db.query(playDeleteSQL(params))
     return {
       code: 0,
       msg: 'success',

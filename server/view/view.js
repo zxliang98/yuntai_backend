@@ -1,12 +1,12 @@
 const db = require('./../db')
 const tools = require('./../tools')
 
-const dbTable = 'notice'
+const dbTable = 'view'
 
 const where = ' where 1=1 '
 
-// 获取单个公告详情
-const noticeDetailSQL = function (params) {
+// 获取单个景区详情
+const viewDetailSQL = function (params) {
   let sql = `select * from ${dbTable} ${where}`
   let sqlParams = []
 
@@ -20,15 +20,11 @@ const noticeDetailSQL = function (params) {
   }
 }
 
-// 获取公告列表
-const noticeListSQL = function (params) {
+// 获取景区列表
+const viewListSQL = function (params) {
   let sql = `select * from ${dbTable} ${where} `
   let sqlParams = []
 
-  if (params.type) {
-    sql += 'AND type = ? '
-    sqlParams.push(params.type)
-  }
   if (params.state) {
     sql += 'AND state = ? '
     sqlParams.push(params.state)
@@ -41,13 +37,12 @@ const noticeListSQL = function (params) {
   }
 }
 
-// 发布公告
-const noticePublishSQL = function (params) {
-  let sql = `insert into ${dbTable} (title, type, content, publishTime, userName, state) values(?,?,?,?,?,?)`
+// 发布景区
+const viewPublishSQL = function (params) {
+  let sql = `insert into ${dbTable} (title, content, publishTime, userName, state) values(?,?,?,?,?)`
   let sqlParams = []
 
   sqlParams.push(params.title)
-  sqlParams.push(params.type)
   sqlParams.push(params.content)
   // sqlParams.push(params.publishTime)
   sqlParams.push(Date.now())
@@ -59,8 +54,8 @@ const noticePublishSQL = function (params) {
   }
 }
 
-// 删除公告
-const noticeDeleteSQL = function (params) {
+// 删除景区
+const viewDeleteSQL = function (params) {
   let sql = `delete from ${dbTable} ${where}`
   let sqlParams = []
 
@@ -75,32 +70,32 @@ const noticeDeleteSQL = function (params) {
 }
 
 module.exports = {
-  async noticeDetail(params) {
-    let data = await db.query(noticeDetailSQL(params))
+  async viewDetail(params) {
+    let data = await db.query(viewDetailSQL(params))
     return {
       code: 0,
       msg: 'success',
       data: data
     }
   },
-  async noticeList(params) {
-    let data = await db.query(noticeListSQL(params))
+  async viewList(params) {
+    let data = await db.query(viewListSQL(params))
     return {
       code: 0,
       msg: 'success',
       data: data
     }
   },
-  async noticePublish(params) {
-    let data = await db.query(noticePublishSQL(params))
+  async viewPublish(params) {
+    let data = await db.query(viewPublishSQL(params))
     return {
       code: 0,
       msg: 'success',
       id: await tools.getMaxId(dbTable)
     }
   },
-  async noticeDelete(params) {
-    let data = await db.query(noticeDeleteSQL(params))
+  async viewDelete(params) {
+    let data = await db.query(viewDeleteSQL(params))
     return {
       code: 0,
       msg: 'success',
