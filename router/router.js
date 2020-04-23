@@ -5,6 +5,31 @@ const router = express.Router()
 const noticeManage = require('./../server/notice/notice')
 const viewManage = require('./../server/view/view')
 const playManage = require('./../server/play/play')
+const userManage = require('./../server/user/user')
+
+// 获取用户详情
+router.get('/user', async (req, res, next) => {
+  let data = await userManage.userDetail(req.query, true)
+  res.send(data)
+})
+
+// 用户登录
+router.post('/login', async (req, res, next) => {
+  let data = await userManage.userLogin(req.body, true)
+  res.send(data)
+})
+
+// 用户注册
+router.post('/register', async (req, res, next) => {
+  let data = await userManage.userRegister(req.body, true)
+  res.send(data)
+})
+
+// 修改用户信息
+router.put('/user', async (req, res, next) => {
+  let data = await userManage.userInfoUpdate(req.body, true)
+  res.send(data)
+})
 
 // 获取公告详情
 router.get('/notice', async (req, res, next) => {
