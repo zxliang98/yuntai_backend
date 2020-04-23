@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: false }))
 
 app.use(cors())
 
-app.use('/', router)
+app.use('/api', router)
 
 const port = 3000
 app.listen(port, () => console.log(`访问${port}端口`))
