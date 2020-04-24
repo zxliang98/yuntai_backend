@@ -21,8 +21,9 @@ router.post('/login', async (req, res, next) => {
 
 // 用户注册
 router.post('/register', async (req, res, next) => {
-  let data = await userManage.userRegister(req.body, true)
-  res.send(data)
+  await userManage.userRegister(req.body, true)
+  let user = await userManage.userLogin(req.body, true)
+  res.send(user)
 })
 
 // 修改用户信息
