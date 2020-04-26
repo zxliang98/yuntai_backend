@@ -32,8 +32,8 @@ const userLoginSQL = function (params) {
   let sql = `select * from ${dbTable} ${where}`
   let sqlParams = []
 
-  sql += 'AND phone = ? '
-  sql += 'AND userPassword = ?'
+  sql += `AND phone = ? `
+  sql += `AND userPassword = ?`
   sqlParams.push(params.phone)
   sqlParams.push(params.userPassword)
 
@@ -92,10 +92,17 @@ module.exports = {
   },
   async userLogin(params, getObj) {
     let data = await db.query(userLoginSQL(params), getObj)
-    return {
-      code: 0,
-      msg: 'success',
-      id: data.id
+    if (data.id) {
+      return {
+        code: 0,
+        msg: 'success',
+        id: data.id
+      }
+    } else {
+      return {
+        code: 1,
+        msg: 'error'
+      }
     }
   },
   async userRegister(params, getObj) {
