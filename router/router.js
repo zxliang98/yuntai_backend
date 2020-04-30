@@ -6,6 +6,7 @@ const noticeManage = require('./../server/notice/notice')
 const viewManage = require('./../server/view/view')
 const playManage = require('./../server/play/play')
 const userManage = require('./../server/user/user')
+const commentManage = require('./../server/comment/comment')
 
 // 获取用户详情
 router.get('/user', async (req, res, next) => {
@@ -105,4 +106,17 @@ router.delete('/play', async (req, res, next) => {
   let data = await playManage.playDelete(req.body)
   res.send(data)
 })
+
+// 获取评论列表
+router.get('/comment', async (req, res, next) => {
+  let data = await commentManage.commentList(req.query)
+  res.send(data)
+})
+
+// 获取评论列表
+router.post('/comment', async (req, res, next) => {
+  let data = await commentManage.commentAdd(req.body)
+  res.send(data)
+})
+
 module.exports = router
