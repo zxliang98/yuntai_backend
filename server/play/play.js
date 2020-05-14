@@ -59,6 +59,27 @@ const playPublishSQL = function (params) {
   }
 }
 
+// 编辑游玩
+const playUpdateSQL = function (params) {
+  let sql = `update ${dbTable} set title=?, type=?, content=?, publishTime=?, userName=?, state=? `
+  let sqlParams = []
+
+  sqlParams.push(params.title)
+  sqlParams.push(params.type)
+  sqlParams.push(params.content)
+  // sqlParams.push(params.publishTime)
+  sqlParams.push(Date.now())
+  sqlParams.push(params.userName || '管理员')
+  sqlParams.push(params.state)
+
+  sql += "where id = ?"
+  sqlParams.push(params.id)
+
+  return {
+    sql, sqlParams
+  }
+}
+
 // 删除游玩
 const playDeleteSQL = function (params) {
   let sql = `delete from ${dbTable} ${where}`
@@ -85,9 +106,12 @@ module.exports = {
   },
   async playList(params) {
     let data = await db.query(playListSQL(params))
+    let total = await tools.getCount(dbTable)
+    
     return {
       code: 0,
       msg: 'success',
+      total,
       data: data
     }
   },
@@ -97,6 +121,13 @@ module.exports = {
       code: 0,
       msg: 'success',
       id: await tools.getMaxId(dbTable)
+    }
+  },
+  async playUpdate(params) {
+    let data = await db.query(playUpdateSQL(params))
+    return {
+      code: 0,
+      msg: 'success',
     }
   },
   async playDelete(params) {

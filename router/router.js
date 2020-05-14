@@ -14,6 +14,12 @@ router.get('/user', async (req, res, next) => {
   res.send(data)
 })
 
+// 获取用户详情
+router.get('/userList', async (req, res, next) => {
+  let data = await userManage.userList(req.query)
+  res.send(data)
+})
+
 // 用户登录
 router.post('/login', async (req, res, next) => {
   let data = await userManage.userLogin(req.body, true)
@@ -33,6 +39,12 @@ router.put('/user', async (req, res, next) => {
   res.send(data)
 })
 
+// 删除用户
+router.delete('/user', async (req, res, next) => {
+  let data = await userManage.userDelete(req.body)
+  res.send(data)
+})
+
 // 获取公告详情
 router.get('/notice', async (req, res, next) => {
   let data = await noticeManage.noticeDetail(req.query, true)
@@ -48,6 +60,12 @@ router.get('/noticeList', async (req, res, next) => {
 // 发布公告
 router.post('/notice', async (req, res, next) => {
   let data = await noticeManage.noticePublish(req.body)
+  res.send(data)
+})
+
+// 编辑景区
+router.put('/notice', async (req, res, next) => {
+  let data = await noticeManage.noticeUpdate(req.body)
   res.send(data)
 })
 
@@ -76,6 +94,12 @@ router.post('/view', async (req, res, next) => {
   res.send(data)
 })
 
+// 编辑景区
+router.put('/view', async (req, res, next) => {
+  let data = await viewManage.viewUpdate(req.body)
+  res.send(data)
+})
+
 // 删除景区
 router.delete('/view', async (req, res, next) => {
   let data = await viewManage.viewDelete(req.body)
@@ -98,6 +122,12 @@ router.get('/playList', async (req, res, next) => {
 // 发布游玩
 router.post('/play', async (req, res, next) => {
   let data = await playManage.playPublish(req.body)
+  res.send(data)
+})
+
+// 发布游玩
+router.put('/play', async (req, res, next) => {
+  let data = await playManage.playUpdate(req.body)
   res.send(data)
 })
 

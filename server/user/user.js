@@ -1,4 +1,5 @@
 const db = require('./../db')
+const tools = require('./../tools')
 
 const dbTable = 'user'
 
@@ -21,6 +22,26 @@ const userDetailSQL = function (params) {
     sql += 'AND userPassword = ?'
     sqlParams.push(params.userPassword)
   }
+
+  return {
+    sql, sqlParams
+  }
+}
+
+// 获取用户列表
+const userListSQL = function (params) {
+  let sql = `select * from ${dbTable} ${where}`
+  let sqlParams = []
+  if (params.type) {
+    sql += 'AND type = ? '
+    sqlParams.push(params.type)
+  }
+  if (params.state) {
+    sql += 'AND state = ? '
+    sqlParams.push(params.state)
+  }
+
+  sql += ` limit ${params.pn * params.pl},${params.pl}`
 
   return {
     sql, sqlParams
@@ -65,15 +86,30 @@ const userInfoUpdateSQL = function (params) {
     sqlParams.push(params.userPassword)
   }
 
-  sql += `name=?,age=?,userName=?,phone=?,gender=?`
+  sql += `name=?,age=?,userName=?,phone=?,gender=?,type=?,state=? `
   sqlParams.push(params.name)
   sqlParams.push(params.age)
   sqlParams.push(params.userName)
   sqlParams.push(params.phone)
   sqlParams.push(params.gender)
+  sqlParams.push(params.type)
+  sqlParams.push(params.state)
 
 
   sql += "where id = ?"
+  sqlParams.push(params.id)
+
+  return {
+    sql, sqlParams
+  }
+}
+
+// 删除用户
+const userDeleteSQL = function (params) {
+  let sql = `delete from ${dbTable} ${where}`
+  let sqlParams = []
+
+  sql += 'AND id = ?'
   sqlParams.push(params.id)
 
   return {
@@ -96,7 +132,8 @@ module.exports = {
       return {
         code: 0,
         msg: 'success',
-        id: data.id
+        id: data.id,
+        type: data.type
       }
     } else {
       return {
@@ -120,6 +157,24 @@ module.exports = {
     return {
       code: 0,
       msg: 'success'
+    }
+  },
+  async userList(params, getObj) {
+    let data = await db.query(userListSQL(params), getObj)
+    let total = await tools.getCount(dbTable)
+    return {
+      code: 0,
+      msg: 'success',
+      total,
+      list: data
+    }
+  },
+  async userDelete(params, getObj) {
+    await db.query(userDeleteSQL(params), getObj)
+    return {
+      code: 0,
+      msg: 'success',
+      id: params.id
     }
   },
 }
