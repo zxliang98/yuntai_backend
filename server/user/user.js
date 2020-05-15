@@ -161,7 +161,7 @@ module.exports = {
   },
   async userList(params, getObj) {
     let data = await db.query(userListSQL(params), getObj)
-    let total = await tools.getCount(dbTable)
+    let total = await tools.getCount(dbTable, params)
     return {
       code: 0,
       msg: 'success',

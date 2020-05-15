@@ -106,7 +106,7 @@ module.exports = {
   },
   async playList(params) {
     let data = await db.query(playListSQL(params))
-    let total = await tools.getCount(dbTable)
+    let total = await tools.getCount(dbTable, params)
     
     return {
       code: 0,
