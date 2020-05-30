@@ -65,11 +65,12 @@ const userLoginSQL = function (params) {
 
 // 用户注册
 const userRegisterSQL = function (params) {
-  let sql = `insert into ${dbTable}(phone,userPassword) values(?,?)`
+  let sql = `insert into ${dbTable}(phone,userPassword,type) values(?,?,?)`
   let sqlParams = []
 
   sqlParams.push(params.phone)
   sqlParams.push(params.userPassword)
+  sqlParams.push(params.type)
 
   return {
     sql, sqlParams
